@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define PORT 65353
+#define PORT 55353
 #define TTL 600
 #define MSG_SIZE 512
 
