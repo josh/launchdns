@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>test.port</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>$BIN</string>
+		<string>--port=65353</string>
+	</array>
+</dict>
+</plist>

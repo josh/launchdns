@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>test.socket</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<false/>
+	<key>ProgramArguments</key>
+	<array>
+		<string>$BIN</string>
+		<string>--socket=Socket</string>
+	</array>
+	<key>Sockets</key>
+	<dict>
+		<key>Socket</key>
+		<dict>
+			<key>SockType</key>
+			<string>dgram</string>
+			<key>SockNodeName</key>
+			<string>127.0.0.1</string>
+			<key>SockServiceName</key>
+			<string>65353</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
