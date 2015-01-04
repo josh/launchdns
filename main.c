@@ -1,5 +1,6 @@
 #include <arpa/inet.h>
 #include <getopt.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,10 +15,9 @@
 
 volatile sig_atomic_t quit = 0;
 
-void quit_handler(int signal)
+void quit_handler()
 {
 	quit = 1;
-	exit(0);
 }
 
 int main(int argc, char **argv)
@@ -74,11 +74,6 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if (timeout != 0) {
-		signal(SIGALRM, quit_handler);
-		alarm(timeout);
-	}
-
 	int sd, err;
 	if (name == NULL) {
 		sd = socket(AF_INET, SOCK_DGRAM, 0);
@@ -103,15 +98,28 @@ int main(int argc, char **argv)
 		fprintf(stderr, "launchd not supported\n");
 		return 1;
 #endif
-}
+	}
+
+	struct sigaction sa;
+	sa.sa_handler = &quit_handler;
+
+	if (timeout != 0) {
+		sigaction(SIGALRM, &sa, NULL);
+		alarm(timeout);
+	}
+	sigaction(SIGTERM, &sa, NULL);
 
 	char msg[MSG_SIZE];
 	struct sockaddr caddr;
 	socklen_t len = sizeof(caddr);
 	int flags = 0;
 
-	while (1) {
+	while (quit == 0) {
 		int n = recvfrom(sd, msg, MSG_SIZE, flags, &caddr, &len);
+
+		if (n < 1) {
+			continue;
+		}
 
 		int qtype = msg[n-3] | msg[n-4] << 8;
 		int qclass = msg[n-1] | msg[n-2] << 8;
@@ -177,5 +185,6 @@ int main(int argc, char **argv)
 
 		sendto(sd, msg, n, flags, &caddr, len);
 	}
+
 	return 0;
 }
