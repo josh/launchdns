@@ -186,5 +186,6 @@ int main(int argc, char **argv)
 		sendto(sd, msg, n, flags, &caddr, len);
 	}
 
+	close(sd);
 	return 0;
 }
