@@ -8,6 +8,14 @@
 #define TTL 600
 #define MSG_SIZE 512
 
+volatile sig_atomic_t quit = 0;
+
+void quit_handler(int signal)
+{
+	quit = 1;
+	exit(0);
+}
+
 int main(int argc, char **argv)
 {
 	char *name = NULL;
@@ -27,16 +35,19 @@ int main(int argc, char **argv)
 	// Default AAAA record to ::1
 	struct in6_addr aaaa = IN6ADDR_LOOPBACK_INIT;
 
+	int timeout = 0;
+
 	struct option longoptions[] = {
 		{"socket", 1, NULL, 's'},
 		{"port", 1, NULL, 'p'},
 		{"a", 1, NULL, '4'},
 		{"aaaa", 1, NULL, '6'},
+		{"timeout", 1, NULL, 't'}
 	};
 
 	int opt;
 
-	while ((opt = getopt_long(argc, argv, "s:p:4:6:", longoptions, NULL)) != EOF) {
+	while ((opt = getopt_long(argc, argv, "s:p:4:6:t:", longoptions, NULL)) != EOF) {
 		switch (opt) {
 			case 's':
 				name = optarg;
@@ -50,10 +61,18 @@ int main(int argc, char **argv)
 			case '6':
 				inet_pton(AF_INET6, optarg, &aaaa);
 				break;
+			case 't':
+				timeout = atoi(optarg);
+				break;
 			default:
 				exit(1);
 				break;
 		}
+	}
+
+	if (timeout != 0) {
+		signal(SIGALRM, quit_handler);
+		alarm(timeout);
 	}
 
 	int sd, err;
