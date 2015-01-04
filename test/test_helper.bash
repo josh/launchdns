@@ -16,5 +16,6 @@ launch_plist() {
   echo "$plist"
 }
 
+LAUNCHD=$(which launchctl || echo)
 BIN=$(expand_path "$BATS_TEST_DIRNAME/../bin/dns")
 PORT="65353"

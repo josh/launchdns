@@ -1,8 +1,12 @@
 #include <arpa/inet.h>
 #include <getopt.h>
-#include <launch.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#ifdef HAVE_LAUNCH_H
+#include <launch.h>
+#endif
 
 #define PORT 55353
 #define TTL 600
@@ -84,6 +88,7 @@ int main(int argc, char **argv)
 			return 1;
 		}
 	} else {
+#ifdef HAVE_LAUNCH_H
 		int *c_fds;
 		size_t c_cnt;
 
@@ -94,7 +99,11 @@ int main(int argc, char **argv)
 			fprintf(stderr, "couldn't activate socket\n");
 			return 1;
 		}
-	}
+#else
+		fprintf(stderr, "launchd not supported\n");
+		return 1;
+#endif
+}
 
 	char msg[MSG_SIZE];
 	struct sockaddr caddr;
