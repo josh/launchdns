@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>test.socket</string>
+	<string>test.ondemand-socket</string>
 	<key>RunAtLoad</key>
 	<false/>
 	<key>ProgramArguments</key>
