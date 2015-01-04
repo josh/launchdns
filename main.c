@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 {
 	char *name = NULL;
 
-	// Default socket on 127.0.0.1:65353
+	// Default socket on 127.0.0.1:55353
 	struct sockaddr_in addr = {
 		.sin_family = AF_INET,
 		.sin_port = htons(PORT),
@@ -43,10 +43,10 @@ int main(int argc, char **argv)
 
 	struct option longoptions[] = {
 		{"socket", 1, NULL, 's'},
+		{"timeout", 1, NULL, 't'},
 		{"port", 1, NULL, 'p'},
 		{"a", 1, NULL, '4'},
-		{"aaaa", 1, NULL, '6'},
-		{"timeout", 1, NULL, 't'}
+		{"aaaa", 1, NULL, '6'}
 	};
 
 	int opt;
@@ -59,14 +59,14 @@ int main(int argc, char **argv)
 			case 'p':
 				addr.sin_port = htons(atoi(optarg));
 				break;
-			case '4':
+			case 't':
+				timeout = atoi(optarg);
+				break;
+				case '4':
 				inet_pton(AF_INET, optarg, &a);
 				break;
 			case '6':
 				inet_pton(AF_INET6, optarg, &aaaa);
-				break;
-			case 't':
-				timeout = atoi(optarg);
 				break;
 			default:
 				exit(1);
