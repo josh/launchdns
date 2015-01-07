@@ -15,6 +15,8 @@
 #define TTL 600
 #define MSG_SIZE 512
 
+#define INADDR_LOOPBACK_INIT { 0x0100007f }
+
 static const struct option longoptions[] = {
 	{"socket", 1, NULL, 's'},
 	{"timeout", 1, NULL, 't'},
@@ -39,13 +41,11 @@ int main(int argc, char **argv)
 	struct sockaddr_in addr = {
 		.sin_family = AF_INET,
 		.sin_port = htons(PORT),
-		.sin_addr.s_addr = htonl(INADDR_LOOPBACK)
+		.sin_addr = INADDR_LOOPBACK_INIT
 	};
 
 	// Default A record to 127.0.0.1
-	struct in_addr a = {
-		.s_addr = htonl(INADDR_LOOPBACK)
-	};
+	struct in_addr a = INADDR_LOOPBACK_INIT;
 
 	// Default AAAA record to ::1
 	struct in6_addr aaaa = IN6ADDR_LOOPBACK_INIT;
