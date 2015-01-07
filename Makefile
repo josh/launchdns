@@ -1,9 +1,9 @@
-CC=cc
-CFLAGS=-Wall
-SOURCES=main.c
-EXECUTABLE=bin/launchdns
-BATS=test/bats/bin/bats
-LAUNCH_H:=$(shell echo "\#include <launch.h>" | cc -E - &>/dev/null; echo $$?)
+CC = cc
+CFLAGS = -Wall
+SOURCES = main.c
+EXECUTABLE = bin/launchdns
+BATS = test/bats/bin/bats
+LAUNCH_H := $(shell echo "\#include <launch.h>" | cc -E - &>/dev/null; echo $$?)
 
 ifeq ($(LAUNCH_H),0)
 	CFLAGS+=-DHAVE_LAUNCH_H
