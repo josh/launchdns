@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 
 	int opt;
 
-	while ((opt = getopt_long(argc, argv, "s:p:4:6:t:", longoptions, NULL)) != EOF) {
+	while ((opt = getopt_long(argc, argv, "s:t:p:4:6:", longoptions, NULL)) != EOF) {
 		switch (opt) {
 			case 's':
 				name = optarg;
