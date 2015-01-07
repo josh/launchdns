@@ -1,4 +1,5 @@
 #include <arpa/inet.h>
+#include <errno.h>
 #include <getopt.h>
 #include <signal.h>
 #include <stdio.h>
@@ -80,7 +81,7 @@ int main(int argc, char **argv)
 		sd = socket(AF_INET, SOCK_DGRAM, 0);
 		err = bind(sd, (struct sockaddr *)&addr, sizeof(addr));
 		if (err < 0) {
-			fprintf(stderr, "couldn't open socket\n");
+			fprintf(stderr, "Could not open socket on %i: %s\n", ntohs(addr.sin_port), strerror(errno));
 			return 1;
 		}
 	} else {
@@ -92,7 +93,7 @@ int main(int argc, char **argv)
 		if (err == 0) {
 			sd = c_fds[0];
 		} else {
-			fprintf(stderr, "couldn't activate socket\n");
+			fprintf(stderr, "Could not activate launchd socket `%s'\n", name);
 			return 1;
 		}
 #else
