@@ -1,9 +1,9 @@
-# dns
+# launchdns
 
 A launchd friendly development loopback DNS server.
 
 ```
-dns [-spt46]
+launchdns [-spt46]
 ```
 
 
@@ -18,7 +18,7 @@ $ make install [PREFIX=<prefix>]
 ## Usage
 
 ```
-$ dns -p 53
+$ launchdns -p 53
 ```
 
 
@@ -62,7 +62,7 @@ The most basic way is setup a run at load agent that binds to the default port.
 	<true/>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/dns</string>
+		<string>/usr/local/bin/launchdns</string>
 	</array>
 </dict>
 </plist>
@@ -83,7 +83,7 @@ Though, the preferred way to configure the server is for it to run on demand.
 	<string>com.github.josh.dns</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/dns</string>
+		<string>/usr/local/bin/launchdns</string>
 		<string>--socket=Socket</string>
 		<string>--timeout=30</string>
 	</array>

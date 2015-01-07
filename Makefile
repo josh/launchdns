@@ -1,7 +1,7 @@
 CC=cc
 CFLAGS=-Wall
 SOURCES=main.c
-EXECUTABLE=bin/dns
+EXECUTABLE=bin/launchdns
 BATS=test/bats/bin/bats
 LAUNCH_H:=$(shell echo "\#include <launch.h>" | cc -E - &>/dev/null; echo $$?)
 
@@ -17,7 +17,7 @@ $(EXECUTABLE): main.c bin
 bin:
 	mkdir bin/
 
-test/bats/bin/bats:
+$(BATS):
 	git submodule init
 	git submodule update
 
