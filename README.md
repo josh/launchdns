@@ -84,12 +84,12 @@ Though, the preferred way to configure the server is for it to run on demand.
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/launchdns</string>
-		<string>--socket=Socket</string>
+		<string>--socket=Listeners</string>
 		<string>--timeout=30</string>
 	</array>
 	<key>Sockets</key>
 	<dict>
-		<key>Socket</key>
+		<key>Listeners</key>
 		<dict>
 			<key>SockType</key>
 			<string>dgram</string>

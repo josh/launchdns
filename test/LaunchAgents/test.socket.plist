@@ -9,11 +9,11 @@
 	<key>ProgramArguments</key>
 	<array>
 		<string>$BIN</string>
-		<string>--socket=Socket</string>
+		<string>--socket=Listeners</string>
 	</array>
 	<key>Sockets</key>
 	<dict>
-		<key>Socket</key>
+		<key>Listeners</key>
 		<dict>
 			<key>SockType</key>
 			<string>dgram</string>
