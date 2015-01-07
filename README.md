@@ -70,7 +70,7 @@ The most basic way is setup a run at load agent that binds to the default port.
 
 This will keep `dns` running on port 55353 anytime you log into your computer.
 
-Though, the preferred way to configure the server to run on demand.
+Though, the preferred way to configure the server is for it to run on demand.
 
 **~/Library/LaunchAgents/com.github.josh.dns.plist**
 
