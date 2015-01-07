@@ -14,10 +14,6 @@ normalize_error() {
 }
 
 @test "invalid option prints error" {
-  if [ "$(uname -s)" != "Darwin" ]; then
-    skip "OSX only"
-  fi
-
   run "$BIN" --invalid
   [ "$status" -eq 1 ]
   [ "$(normalize_error "${lines[0]}")" = "$name: unrecognized option '--invalid'" ]
