@@ -6,9 +6,8 @@ BINDIR = $(PREFIX)/bin
 BATS = test/bats/bin/bats
 SOURCES = main.c
 EXECUTABLE = launchdns
-LAUNCH_H := $(shell echo "\#include <launch.h>" | cc -E - &>/dev/null; echo $$?)
 
-ifeq ($(LAUNCH_H),0)
+ifneq ($(wildcard /usr/include/launch.h),)
 	CFLAGS+=-DHAVE_LAUNCH_H
 endif
 
