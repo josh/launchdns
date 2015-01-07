@@ -48,7 +48,8 @@ int main(int argc, char **argv)
 		{"timeout", 1, NULL, 't'},
 		{"port", 1, NULL, 'p'},
 		{"a", 1, NULL, '4'},
-		{"aaaa", 1, NULL, '6'}
+		{"aaaa", 1, NULL, '6'},
+		{ NULL, 0, NULL, 0 }
 	};
 
 	int opt;
