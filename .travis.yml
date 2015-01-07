@@ -1,3 +1,4 @@
 language: c
 install: make
 script: make test
+sudo: false
