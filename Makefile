@@ -1,5 +1,8 @@
 CC = cc
 CFLAGS = -Wall
+INSTALL = /usr/bin/install
+PREFIX = /usr/local
+BINDIR = $(PREFIX)/bin
 BATS = test/bats/bin/bats
 SOURCES = main.c
 EXECUTABLE = launchdns
@@ -13,6 +16,10 @@ all: $(EXECUTABLE)
 
 $(EXECUTABLE): main.c
 	$(CC) $(CFLAGS) -o $@ $<
+
+install: $(EXECUTABLE)
+	$(INSTALL) -d $(BINDIR)
+	$(INSTALL) $(EXECUTABLE) $(BINDIR)/$(EXECUTABLE)
 
 $(BATS):
 	git submodule init
@@ -28,4 +35,4 @@ else
 		$(BATS) ./test
 endif
 
-.PHONY: clean test
+.PHONY: install clean test
