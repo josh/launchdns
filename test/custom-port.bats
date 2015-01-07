@@ -18,14 +18,14 @@ teardown() {
   name="test"
   run dig +tries=1 +time=1 -p $PORT @127.0.0.1 $name A +noall +answer +comments
   [ "$status" -eq 0 ]
-  echo "$output" | grep "status: NOERROR,"
-  echo "$output" | grep "^test.\t\t\t600\tIN\tA\t127.0.0.1"
+  [[ "$output" == *"status: NOERROR,"* ]]
+  [[ "$output" == *"test.			600	IN	A	127.0.0.1"* ]]
 }
 
 @test "dig AAAA record" {
   name="test"
   run dig +tries=1 +time=1 -p $PORT @127.0.0.1 $name AAAA +noall +answer +comments
   [ "$status" -eq 0 ]
-  echo "$output" | grep "status: NOERROR,"
-  echo "$output" | grep "^test.\t\t\t600\tIN\tAAAA\t::1"
+  [[ "$output" == *"status: NOERROR,"* ]]
+  [[ "$output" == *"test.			600	IN	AAAA	::1"* ]]
 }
