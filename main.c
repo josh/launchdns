@@ -15,6 +15,15 @@
 #define TTL 600
 #define MSG_SIZE 512
 
+static const struct option longoptions[] = {
+	{"socket", 1, NULL, 's'},
+	{"timeout", 1, NULL, 't'},
+	{"port", 1, NULL, 'p'},
+	{"a", 1, NULL, '4'},
+	{"aaaa", 1, NULL, '6'},
+	{ NULL, 0, NULL, 0 }
+};
+
 volatile sig_atomic_t quit = 0;
 
 void quit_handler()
@@ -42,15 +51,6 @@ int main(int argc, char **argv)
 	struct in6_addr aaaa = IN6ADDR_LOOPBACK_INIT;
 
 	int timeout = 0;
-
-	struct option longoptions[] = {
-		{"socket", 1, NULL, 's'},
-		{"timeout", 1, NULL, 't'},
-		{"port", 1, NULL, 'p'},
-		{"a", 1, NULL, '4'},
-		{"aaaa", 1, NULL, '6'},
-		{ NULL, 0, NULL, 0 }
-	};
 
 	int opt;
 
