@@ -13,7 +13,8 @@
 
 #define PORT 0x39d8
 #define TTL 600
-#define MSG_SIZE 512
+#define MAX_REQ 271
+#define MAX_RES 300
 
 #define INADDR_LOOPBACK_INIT { 0x0100007f }
 
@@ -112,13 +113,13 @@ int main(int argc, char **argv)
 	}
 	sigaction(SIGTERM, &sa, NULL);
 
-	char msg[MSG_SIZE];
+	char msg[MAX_RES];
 	struct sockaddr caddr;
 	socklen_t len = sizeof(caddr);
 	int flags = 0;
 
 	while (quit == 0) {
-		int n = recvfrom(sd, msg, MSG_SIZE, flags, &caddr, &len);
+		int n = recvfrom(sd, msg, MAX_REQ, flags, &caddr, &len);
 
 		if (n < 1) {
 			continue;
