@@ -11,7 +11,7 @@
 #include <launch.h>
 #endif
 
-#define PORT 55353
+#define PORT 0x39d8
 #define TTL 600
 #define MSG_SIZE 512
 
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 	// Default socket on 127.0.0.1:55353
 	struct sockaddr_in addr = {
 		.sin_family = AF_INET,
-		.sin_port = htons(PORT),
+		.sin_port = PORT,
 		.sin_addr = INADDR_LOOPBACK_INIT
 	};
 
