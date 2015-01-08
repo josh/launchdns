@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall
 INSTALL = /usr/bin/install
-PREFIX = /usr/local
+PREFIX ?= /usr/local
 BINDIR = $(PREFIX)/bin
 BATS = test/bats/bin/bats
 SOURCES = main.c
