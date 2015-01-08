@@ -11,7 +11,7 @@ setup() {
 }
 
 teardown() {
-  kill $pid
+  kill -9 $pid
   sleep 0
 }
 
