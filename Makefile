@@ -4,16 +4,16 @@ INSTALL = /usr/bin/install
 PREFIX ?= /usr/local
 BINDIR = $(PREFIX)/bin
 BATS = test/bats/bin/bats
+CONFIG = config.h
 SOURCES = main.c
 EXECUTABLE = launchdns
 
-ifneq ($(wildcard /usr/include/launch.h),)
-	CFLAGS+=-DHAVE_LAUNCH_H
-endif
-
 all: $(EXECUTABLE)
 
-$(EXECUTABLE): main.c
+$(CONFIG):
+	./configure
+
+$(EXECUTABLE): main.c $(CONFIG)
 	$(CC) $(CFLAGS) -o $@ $<
 
 install: $(EXECUTABLE)
@@ -25,7 +25,7 @@ $(BATS):
 	git submodule update
 
 clean:
-	rm -f $(EXECUTABLE)
+	rm -f $(CONFIG) $(EXECUTABLE)
 
 test: all $(BATS)
 ifdef $CI

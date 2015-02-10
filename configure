@@ -1,0 +1,13 @@
+#!/bin/sh
+
+rm -f config.h
+touch config.h
+
+if [ -f "/usr/include/launch.h" ]; then
+  echo "#define HAVE_LAUNCH_H 1" >> config.h
+
+  cat /usr/include/launch.h | grep -q "^launch_activate_socket"
+  if [ "$?" = "0" ]; then
+    echo "#define HAVE_LAUNCH_ACTIVATE_SOCKET 1" >> config.h
+  fi
+fi

@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <getopt.h>
@@ -86,7 +88,7 @@ int main(int argc, char **argv)
 			return 1;
 		}
 	} else {
-#ifdef HAVE_LAUNCH_H
+#ifdef HAVE_LAUNCH_ACTIVATE_SOCKET
 		int *c_fds;
 		size_t c_cnt;
 
