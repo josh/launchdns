@@ -80,6 +80,9 @@ int main(int argc, char **argv)
 				break;
 			case 'v':
 				printf("launchdns " STR(VERSION));
+				#ifndef HAVE_LAUNCH_ACTIVATE_SOCKET
+								printf(" (without socket activation)");
+				#endif
 				printf("\n");
 				exit(0);
 			default:
