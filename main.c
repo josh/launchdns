@@ -13,11 +13,15 @@
 #include <launch.h>
 #endif
 
+#define VERSION 1.0.1
 #define PORT 0x39d8
 #define TTL 600
 #define RECV_SIZE 512
 
 #define INADDR_LOOPBACK_INIT { 0x0100007f }
+
+#define STR_HELPER(x) #x
+#define STR(x) STR_HELPER(x)
 
 static const struct option longoptions[] = {
 	{"socket", 1, NULL, 's'},
@@ -25,6 +29,7 @@ static const struct option longoptions[] = {
 	{"port", 1, NULL, 'p'},
 	{"a", 1, NULL, '4'},
 	{"aaaa", 1, NULL, '6'},
+	{"version", 0, NULL, 'v'},
 	{ NULL, 0, NULL, 0 }
 };
 
@@ -56,7 +61,7 @@ int main(int argc, char **argv)
 
 	int opt;
 
-	while ((opt = getopt_long(argc, argv, "s:t:p:4:6:", longoptions, NULL)) != EOF) {
+	while ((opt = getopt_long(argc, argv, "s:t:p:4:6:v", longoptions, NULL)) != EOF) {
 		switch (opt) {
 			case 's':
 				name = optarg;
@@ -73,6 +78,10 @@ int main(int argc, char **argv)
 			case '6':
 				inet_pton(AF_INET6, optarg, &aaaa);
 				break;
+			case 'v':
+				printf("launchdns " STR(VERSION));
+				printf("\n");
+				exit(0);
 			default:
 				exit(1);
 				break;
