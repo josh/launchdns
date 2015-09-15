@@ -1,4 +1,15 @@
 #!/bin/sh
+while [ "$1" ]; do
+  case "$1" in
+    --with-launch-h)                 WITH_LAUNCH_H="1";;
+    --with-launch-h-activate-socket) WITH_LAUNCH_H_ACTIVATE_SOCKET="1";;
+    *)
+      echo "Unknown argument '$1'!" >&2
+      exit 1
+      ;;
+  esac
+  shift
+done
 
 rm -f config.h
 touch config.h
@@ -18,5 +29,11 @@ if [ -n "$LAUNCH_H" ]; then
   cat "$LAUNCH_H" | grep -q "^launch_activate_socket"
   if [ "$?" = "0" ]; then
     echo "#define HAVE_LAUNCH_ACTIVATE_SOCKET 1" >> config.h
+  elif [ -n "$WITH_LAUNCH_H_ACTIVATE_SOCKET" ]; then
+    echo "Could not find 'launch_activate_socket' in '$LAUNCH_H'!" >&2
+    exit 1
   fi
+elif [ -n "$WITH_LAUNCH_H" ] || [ -n "$WITH_LAUNCH_H_ACTIVATE_SOCKET" ]; then
+  echo "Could not find 'launch.h'!" >&2
+  exit 1
 fi
