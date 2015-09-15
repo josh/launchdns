@@ -4,9 +4,18 @@ rm -f config.h
 touch config.h
 
 if [ -f "/usr/include/launch.h" ]; then
+  LAUNCH_H="/usr/include/launch.h"
+else
+  XCODE_SDK_PATH=$(xcrun --show-sdk-path 2>/dev/null)
+  if [ -f "$XCODE_SDK_PATH/usr/include/launch.h" ]; then
+    LAUNCH_H="$XCODE_SDK_PATH/usr/include/launch.h"
+  fi
+fi
+
+if [ -n "$LAUNCH_H" ]; then
   echo "#define HAVE_LAUNCH_H 1" >> config.h
 
-  cat /usr/include/launch.h | grep -q "^launch_activate_socket"
+  cat "$LAUNCH_H" | grep -q "^launch_activate_socket"
   if [ "$?" = "0" ]; then
     echo "#define HAVE_LAUNCH_ACTIVATE_SOCKET 1" >> config.h
   fi
