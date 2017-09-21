@@ -107,9 +107,9 @@ Though, the preferred way to configure the server is to run on demand.
 
 Instead of the server being started at load, it will automatically start on demand when theres activity on 127.0.0.1:55353. And after 30 seconds, it will quit until it needs to be launched again. Note the `--socket` name matches the `Listeners` name of the Socket dictionary key.
 
-Last, configure your system's resolver to use the nameserver for whatever TLDs you wish, for an example `.dev`.
+Last, configure your system's resolver to use the nameserver for whatever TLDs you wish, for an example `.localhost`.
 
-**/etc/resolver/dev**
+**/etc/resolver/localhost**
 
 ```
 nameserver 127.0.0.1
