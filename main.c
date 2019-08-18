@@ -18,6 +18,7 @@
 #define PORT 0x39d8
 #define TTL 600
 #define RECV_SIZE 512
+#define HEADER_SIZE 12
 
 #define INADDR_LOOPBACK_INIT { 0x0100007f }
 
@@ -135,12 +136,30 @@ int main(int argc, char **argv)
 	while (quit == 0) {
 		int n = recvfrom(sd, msg, RECV_SIZE, flags, &caddr, &len);
 
-		if (n < 1) {
+		if (n < HEADER_SIZE) {
 			continue;
 		}
 
-		int qtype = msg[n-3] | msg[n-4] << 8;
-		int qclass = msg[n-1] | msg[n-2] << 8;
+		int qdcount = msg[5] | msg[4] << 8;
+
+		if (qdcount < 1) {
+			continue;
+		}
+
+		int i = HEADER_SIZE;
+
+		while (i < n && msg[i] != 0) {
+			i += msg[i] + 1;
+		}
+
+		int ans = i + 5;
+
+		if (i == HEADER_SIZE || n < ans) {
+			continue;
+		}
+
+		int qtype = msg[i+2] | msg[i+1] << 8;
+		int qclass = msg[i+4] | msg[i+3] << 8;
 
 		if (qclass == 0x01 && (qtype == 0x01 || qtype == 0x1c)) {
 			// Opcode
@@ -160,23 +179,23 @@ int main(int argc, char **argv)
 			msg[11] = 0x00;
 
 			// RR Name
-			msg[n++] = 0xc0;
-			msg[n++] = 0x0c;
+			msg[ans++] = 0xc0;
+			msg[ans++] = 0x0c;
 
 			// RR Type
-			msg[n++] = qtype >> 8;
-			msg[n++] = qtype;
+			msg[ans++] = qtype >> 8;
+			msg[ans++] = qtype;
 
 			// RR Class
-			msg[n++] = qclass >> 8;
-			msg[n++] = qclass;
+			msg[ans++] = qclass >> 8;
+			msg[ans++] = qclass;
 
 			// TTL
 			uint32_t ttl = TTL;
-			msg[n++] = ttl >> 24;
-			msg[n++] = ttl >> 16;
-			msg[n++] = ttl >> 8;
-			msg[n++] = ttl;
+			msg[ans++] = ttl >> 24;
+			msg[ans++] = ttl >> 16;
+			msg[ans++] = ttl >> 8;
+			msg[ans++] = ttl;
 
 			void *rdata;
 			uint16_t rsize;
@@ -189,19 +208,19 @@ int main(int argc, char **argv)
 			}
 
 			// RD Length
-			msg[n++] = rsize >> 8;
-			msg[n++] = rsize;
+			msg[ans++] = rsize >> 8;
+			msg[ans++] = rsize;
 
 			// RDATA
-			memcpy(&msg[n], rdata, rsize);
-			n += rsize;
+			memcpy(&msg[ans], rdata, rsize);
+			ans += rsize;
 		} else {
 			// NXDomain
 			msg[2] = 0x81;
 			msg[3] = 0x03;
 		}
 
-		sendto(sd, msg, n, flags, &caddr, len);
+		sendto(sd, msg, ans, flags, &caddr, len);
 	}
 
 	close(sd);
