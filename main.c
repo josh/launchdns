@@ -71,11 +71,11 @@ int main(int argc, char **argv)
 			case 't':
 				timeout = atoi(optarg);
 				break;
-				case '4':
-				inet_pton(AF_INET, optarg, &a);
-				break;
 			case 'p':
 				addr.sin_port = htons(atoi(optarg));
+				break;
+			case '4':
+				inet_pton(AF_INET, optarg, &a);
 				break;
 			case '6':
 				inet_pton(AF_INET6, optarg, &aaaa);
