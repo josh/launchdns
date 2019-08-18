@@ -120,6 +120,7 @@ int main(int argc, char **argv)
 	}
 
 	struct sigaction sa;
+	memset(&sa, 0, sizeof(sa));
 	sa.sa_handler = &quit_handler;
 
 	if (timeout != 0) {
