@@ -17,7 +17,7 @@ teardown() {
 
 @test "dig custom A record" {
   name="test"
-  run dig +tries=1 +time=1 -p $PORT @127.0.0.1 $name A +noall +answer +comments
+  run dig +tries=1 +time=1 -p $PORT @127.0.0.1 $name A +edns=0 +noall +answer +comments
   [ "$status" -eq 0 ]
   [[ "$output" == *"status: NOERROR,"* ]]
   [[ "$output" == *"test.			600	IN	A	$A"* ]]
@@ -25,7 +25,7 @@ teardown() {
 
 @test "dig custom AAAA record" {
   name="test"
-  run dig +tries=1 +time=1 -p $PORT @127.0.0.1 $name AAAA +noall +answer +comments
+  run dig +tries=1 +time=1 -p $PORT @127.0.0.1 $name AAAA +edns=0 +noall +answer +comments
   [ "$status" -eq 0 ]
   [[ "$output" == *"status: NOERROR,"* ]]
   [[ "$output" == *"test.			600	IN	AAAA	$AAAA"* ]]
