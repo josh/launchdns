@@ -1,0 +1,19 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install dnsutils
+      run: sudo apt-get install dnsutils
+
+    - name: make
+      run: make
+
+    - name: make test
+      run: make test
