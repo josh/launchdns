@@ -13,7 +13,7 @@
 #include <launch.h>
 #endif
 
-#define VERSION 1.0.3
+#define VERSION 1.0.4
 
 #define PORT 0x39d8
 #define TTL 600
